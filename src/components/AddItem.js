@@ -17,29 +17,34 @@ const AddItem = ({ onAddItem }) => {
     const [ variationName , setVariationName ] = useState('');
     const [ hasVariations , setHasVariations ] = useState(false);
 
+
+    const [ variationID , setVariationID ] = useState(0);
     const [ price , setPrice ] = useState('');
     const [ cost , setCost ] = useState('');
     const [ stockAmount , setStockAmount ] = useState('');
 
-    const priceCheck = () => {
-        if (!(Number(price)) || (Number(price)) < 0) {
-            alert('Please add a valid price')
-            return            
+    const invalidPriceCheck = () => {
+        const check = !(Number(price)) || (Number(price)) < 0 ;
+        if (check) {
+            alert('Please add a valid price')      
         }
+        return check;
     }
 
-    const costCheck = () => {
-        if (!(Number(cost)) || (Number(cost)) < 0) {
-            alert('Please add a valid cost')
-            return            
+    const invalidCostCheck = () => {
+        const check = !(Number(cost)) || (Number(cost)) < 0 ;
+        if (check) {
+            alert('Please add a valid cost')      
         }
+        return check;
     }
 
-    const stockAmountCheck = () => {
-        if (!(Number(stockAmount)) || (Number(stockAmount)) < 0) {
-            alert('Please add a valid amount of stock')
-            return            
+    const invalidStockAmountCheck = () => {
+        const check = !(Number(stockAmount)) || (Number(stockAmount)) < 0 ;
+        if (check) {
+            alert('Please add a valid amount of stock')      
         }
+        return check;
     }
 
     const variationReset = () => {
@@ -65,11 +70,13 @@ const AddItem = ({ onAddItem }) => {
         }
 
         if (variations.length === 0 ) {
-            priceCheck();
-            costCheck();
-            stockAmountCheck();
+
+            if (invalidPriceCheck() || invalidCostCheck() || invalidStockAmountCheck() ) {
+                return
+            }
+
             variations.push({
-                variationName : 'No Variation',
+                variationName : variationName === '' ? 'No Variation' : variationName,
                 price,
                 cost,
                 stockAmount
@@ -82,6 +89,7 @@ const AddItem = ({ onAddItem }) => {
         setCategory('');
         setIsNewCategory(true);
         setVariations([]);
+        setVariationID(0);
         variationReset();
     }
 
@@ -94,25 +102,42 @@ const AddItem = ({ onAddItem }) => {
           return
         }
 
-        const newVariation = { variationName , price , cost , stockAmount };
+        if (invalidPriceCheck() || invalidCostCheck() || invalidStockAmountCheck() ) {
+            return
+        }
+
+        const newVariation = { variationID , variationName , price , cost , stockAmount };
 
         setVariations([...variations,newVariation]);
+        setVariationID(variationID + 1);
+        
+        variationReset();
+    }
+
+    /* Deleting Variation */
+
+    const onDeleteVariation = (id) => {
+
+        setVariations(variations.filter((variation) => 
+            variation.variationID != id
+        ));
         
         variationReset();
     }
 
     return (
-        <div>
+        <div className="form-container">
         <form className="add-item-form" onSubmit={onSubmit}>
 
             {/* Item Name*/}
-            <div className="form-control">
+            <div className="form-group">
                 <label>Name</label>
                 <input
                     type="text"
                     placeholder="Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    className="form-control"
                 />
             </div>
 
@@ -123,51 +148,58 @@ const AddItem = ({ onAddItem }) => {
             <VariationToggling variationName={variationName} setVariationName={setVariationName} hasVariations={hasVariations} setHasVariations={setHasVariations}/>
 
             {/* Item Price*/}
-            <div className="form-control">
+            <div className="form-group">
                 <label>Price</label>
                 <input
                     type="text"
                     placeholder="Price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
+                    className="form-control"
                 />
             </div>
 
             {/* Item Cost*/}
-            <div className="form-control">
+            <div className="form-group">
                 <label>Cost</label>
                 <input
                     type="text"
                     placeholder="Cost"
                     value={cost}
                     onChange={(e) => setCost(e.target.value)}
+                    className="form-control"
                 />
             </div>
 
             {/* Item Stock Amount*/}
-            <div className="form-control">
+            <div className="form-group">
                 <label>Amount in Stock</label>
                 <input
                     type="text"
                     placeholder="Amount in Stock"
                     value={stockAmount}
                     onChange={(e) => setStockAmount(e.target.value)}
+                    className="form-control"
                 />
             </div>
 
             { /* Add Variation Button */ }
 
             { hasVariations && (
-                <input type='button' value='Save Variation' onClick={() => onAddVariation()}/>  
+                <input type='button' value='Add Variation'  className='btn btn-primary' onClick={() => onAddVariation()}/>  
             ) }
 
             { /* Monitoring Variations List */}
 
-            <Variations variations={variations}/>
+            { variations.length > 0 ? (
+
+            <Variations variations={variations} onDeleteVariation={onDeleteVariation}/>
+
+            ) : 'No variations, you can tick the Variations Checkbox, then input your details and click the "Add Variation" button to add variations' }
 
             { /* Submit New Item */}
 
-            <input type='submit' value='Save Item'/>
+            <input className='btn btn-primary' type='submit' value='Save Item'/>
 
         </form>
 

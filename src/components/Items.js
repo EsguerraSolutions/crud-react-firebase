@@ -16,8 +16,8 @@ const Items = ({ items }) => {
                       <td>{variation.price}</td>
                       <td>{variation.cost}</td>
                       <td>{variation.stockAmount}</td>
-                      <td>Edit</td>
-                      <td>Delete</td>
+                      <td><button type="button" className="btn btn-warning"><i className="fa-solid fa-pen-to-square"></i></button></td>
+                      <td><button type="button" className="btn btn-danger"><i className="fa-solid fa-trash-can"></i></button></td>
                     </tr>
                 );
               })
@@ -26,9 +26,9 @@ const Items = ({ items }) => {
       );
     });
   return (
-    <table>
+    <table className="table">
       <thead>
-        <tr>
+        <tr className="table-dark">
           <th>Name</th>
           <th>Category</th>
           <th>Variation</th>
