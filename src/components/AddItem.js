@@ -195,7 +195,7 @@ const AddItem = ({ onAddItem }) => {
 
             <Variations variations={variations} onDeleteVariation={onDeleteVariation}/>
 
-            ) : 'No variations, you can tick the Variations Checkbox, then input your details and click the "Add Variation" button to add variations' }
+            ) : ( <p id="variation-message">'No variations saved. If you want to save multiple variations for your item, you can tick the Variations Checkbox, then input your details and click the "Add Variation" button to add variations'</p> ) }
 
             { /* Submit New Item */}
 

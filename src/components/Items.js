@@ -1,11 +1,11 @@
-const Items = ({ items }) => {
+const Items = ({ items , onDeleteItem }) => {
     const tableBody = items.map((item) => {
       return (
         <tbody key={item.name}>
             {
               item.variations.map((variation,index) => {
                 return (
-                    <tr key={variation.name}>
+                    <tr key={variation.variationName}>
                       { index === 0 && (
                         <>
                           <td rowspan={item.variations.length}>{item.name}</td>
@@ -17,7 +17,8 @@ const Items = ({ items }) => {
                       <td>{variation.cost}</td>
                       <td>{variation.stockAmount}</td>
                       <td><button type="button" className="btn btn-warning"><i className="fa-solid fa-pen-to-square"></i></button></td>
-                      <td><button type="button" className="btn btn-danger"><i className="fa-solid fa-trash-can"></i></button></td>
+                      <td><button type="button" className="btn btn-danger" onClick={ () => onDeleteItem(item.name) } ><i className="fa-solid fa-trash-can"></i></button></td>
+
                     </tr>
                 );
               })
