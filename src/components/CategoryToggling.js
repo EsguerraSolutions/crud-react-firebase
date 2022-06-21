@@ -1,4 +1,14 @@
-const CategoriesList = ({ category , setCategory , isNewCategory , setIsNewCategory}) => {
+const CategoryToggling = ({ category , setCategory , isNewCategory , setIsNewCategory}) => {
+
+    const setToExistingCategory = (category) => {
+        setIsNewCategory(false);
+        setCategory(category);
+    }
+
+    const setToNewCategory = () => {
+        setIsNewCategory(true);
+        setCategory('');
+    }
     
     return (
         <div className="categories">
@@ -6,11 +16,11 @@ const CategoriesList = ({ category , setCategory , isNewCategory , setIsNewCateg
             {/* Category List*/}
             <div className="form-control">
                 <label for="category-list">Select Category</label>
-                    <select id="category-list" name="categories" onChange={(e) => e.target.value === "new-category" ? setIsNewCategory(true) : setIsNewCategory(false) }> 
+                    <select id="category-list" name="categories" value={category} onChange={(e) => e.target.value === "new-category" ? setToNewCategory() : setToExistingCategory(e.target.value) }> 
                         <option value="new-category" selected>New Category</option>
-                        <option value="foods">Foods</option>
-                        <option value="drinks">Drinks</option>
-                        <option value="desserts">Desserts</option>
+                        <option value="Foods">Foods</option>
+                        <option value="Drinks">Drinks</option>
+                        <option value="Desserts">Desserts</option>
                     </select>
             </div>
 
@@ -31,4 +41,4 @@ const CategoriesList = ({ category , setCategory , isNewCategory , setIsNewCateg
     )
 }
 
-export default CategoriesList;
+export default CategoryToggling;

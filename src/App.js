@@ -7,10 +7,14 @@ import AddItem from './components/AddItem';
 
 function App() {
   const [ items , setItems ] = useState(itemsModel);
+  const onAddItem = (item) => {
+    const newItem = {...item};
+    setItems([...items,newItem]);
+  }
   return (
     <div className="App">
       <Header/>
-      <AddItem/>
+      <AddItem onAddItem={onAddItem}/>
       <Items items={items}/>
     </div>
   );

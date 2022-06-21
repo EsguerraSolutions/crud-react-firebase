@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import VariationsList from './VariationsList';
-import CategoriesList from './CategoriesList';
+import VariationToggling from './VariationToggling';
+import CategoryToggling from './CategoryToggling';
+import Variations from './Variations';
 
-const AddItem = () => {
+const AddItem = ({ onAddItem }) => {
 
-    {/* Define Item Description Variables */}
+    /* Define Item Description Variables */
 
     const [ name , setName ] = useState('');
 
@@ -13,17 +14,42 @@ const AddItem = () => {
     const [ isNewCategory , setIsNewCategory ] = useState(true);
 
     const [ variations , setVariations ] = useState([]);
-
     const [ variationName , setVariationName ] = useState('');
     const [ hasVariations , setHasVariations ] = useState(false);
-    const [ isNewVariation , setIsNewVariation ] = useState(false);
 
     const [ price , setPrice ] = useState('');
     const [ cost , setCost ] = useState('');
     const [ stockAmount , setStockAmount ] = useState('');
 
+    const priceCheck = () => {
+        if (!(Number(price)) || (Number(price)) < 0) {
+            alert('Please add a valid price')
+            return            
+        }
+    }
+
+    const costCheck = () => {
+        if (!(Number(cost)) || (Number(cost)) < 0) {
+            alert('Please add a valid cost')
+            return            
+        }
+    }
+
+    const stockAmountCheck = () => {
+        if (!(Number(stockAmount)) || (Number(stockAmount)) < 0) {
+            alert('Please add a valid amount of stock')
+            return            
+        }
+    }
+
+    const variationReset = () => {
+        setVariationName('');
+        setPrice('');
+        setCost('');
+        setStockAmount('');
+    }
     
-    {/* Define On Submit Event */}
+    /* Define On Submit Event */
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -33,40 +59,46 @@ const AddItem = () => {
           return
         }
 
-        if (!category && isNewCategory) {
+        if (!category) {
             alert('Please add an category name')
             return
         }
+
+        if (variations.length === 0 ) {
+            priceCheck();
+            costCheck();
+            stockAmountCheck();
+            variations.push({
+                variationName : 'No Variation',
+                price,
+                cost,
+                stockAmount
+            });
+        }
+
+        onAddItem({ name , category , variations});
     
         setName('');
         setCategory('');
-        // setVariationName('');
-        // setHasVariations(false);
-        //setIsNewVariation(false);
-        // setPrice('');
-        // setCost('');
-        // setStockAmount('');
+        setIsNewCategory(true);
+        setVariations([]);
+        variationReset();
     }
 
-    {/* Adding Variation */}
+    /* Adding Variation */
     
     const onAddVariation = () => {
 
-        if (!variationName && isNewVariation) {
+        if (!variationName) {
           alert('Please add a variation name')
           return
         }
 
-        const variation = { variationName , price , cost , stockAmount };
+        const newVariation = { variationName , price , cost , stockAmount };
 
-        setVariations([...variations,variation]);
-    
-        // onAdd({ text, day, reminder })
+        setVariations([...variations,newVariation]);
         
-        setVariationName('');
-        setPrice('');
-        setCost('');
-        setStockAmount('');
+        variationReset();
     }
 
     return (
@@ -84,11 +116,11 @@ const AddItem = () => {
                 />
             </div>
 
-            {/* Item Categories*/}
-            <CategoriesList category={category} setCategory={setCategory} isNewCategory={isNewCategory} setIsNewCategory={setIsNewCategory}/>
+            {/* Item Categories Toggleable*/}
+            <CategoryToggling category={category} setCategory={setCategory} isNewCategory={isNewCategory} setIsNewCategory={setIsNewCategory}/>
 
-            {/* Item Variations List*/}
-            <VariationsList variationName={variationName} setVariationName={setVariationName} hasVariations={hasVariations} setHasVariations={setHasVariations} isNewVariation={isNewVariation} setIsNewVariation={setIsNewVariation}/>
+            {/* Item Variations Toggleable*/}
+            <VariationToggling variationName={variationName} setVariationName={setVariationName} hasVariations={hasVariations} setHasVariations={setHasVariations}/>
 
             {/* Item Price*/}
             <div className="form-control">
@@ -123,20 +155,21 @@ const AddItem = () => {
                 />
             </div>
 
-        <input type='submit' value='Save Item'/>      
+            { /* Add Variation Button */ }
+
+            { hasVariations && (
+                <input type='button' value='Save Variation' onClick={() => onAddVariation()}/>  
+            ) }
+
+            { /* Monitoring Variations List */}
+
+            <Variations variations={variations}/>
+
+            { /* Submit New Item */}
+
+            <input type='submit' value='Save Item'/>
+
         </form>
-
-        { /* Add Variation Button */ }
-
-        { hasVariations && (
-            <input type='button' value='Save Variation' onClick={() => onAddVariation()}/>  
-        ) }
-
-        { /* Delete Variation Button */ }
-
-        { (isNewVariation === false && hasVariations) && (
-            <input type='button' value='Delete Variation'/>  
-        ) }
 
         </div>
     );
