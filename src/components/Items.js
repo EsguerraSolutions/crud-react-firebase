@@ -38,7 +38,8 @@ const Items = ({ items , onDeleteItem , onToggleMode , onGetVariationData }) => 
       );
     });
   return (
-    <table className="table">
+    <div className="table-responsive">
+    <table className="table items-table">
       <thead>
         <tr className="table-dark">
           <th>Name</th>
@@ -52,6 +53,7 @@ const Items = ({ items , onDeleteItem , onToggleMode , onGetVariationData }) => 
       </thead>
         {tableBody}
     </table>
+    </div>
   );
 }
 

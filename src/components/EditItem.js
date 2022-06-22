@@ -7,7 +7,6 @@ const EditItem = ({ variationData , onToggleMode , onEditItem}) => {
     const [ itemID , setItemID ] = useState(variationData.id);
     const [ itemName , setItemName ] = useState(variationData.name);
     const [ itemCategory , setItemCategory ] = useState(variationData.category);
-    const [ isNewCategory , setIsNewCategory ] = useState(false);
     const [ variationID , setVariationID ] = useState(variationData.variationID);
     const [ variationName , setVariationName ] = useState(variationData.variationName);
     const [ variationPrice , setVariationPrice ] = useState(variationData.price);
@@ -47,7 +46,7 @@ const EditItem = ({ variationData , onToggleMode , onEditItem}) => {
 
     return (
     <div className="form-container">
-        <form className="add-item-form">
+        <form className="edit-item-form">
 
             {/* Item Name*/}
             <div className="form-group">
@@ -61,8 +60,17 @@ const EditItem = ({ variationData , onToggleMode , onEditItem}) => {
                 />
             </div>
 
-            {/* Item Categories Toggleable*/}
-            <CategoryToggling category={itemCategory} setCategory={setItemCategory} isNewCategory={isNewCategory} setIsNewCategory={setIsNewCategory}/>
+            {/* Item Categories*/}
+            <div className="form-group">
+                <label>Category Name</label>
+                <input
+                type="text"
+                placeholder="Category"
+                value={itemCategory}
+                onChange={(e) => setItemCategory(e.target.value)}
+                className="form-control"
+                />
+            </div>
 
             {/* Variation Name */}
             <div className="form-group">

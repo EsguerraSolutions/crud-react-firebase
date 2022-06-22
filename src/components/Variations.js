@@ -7,13 +7,14 @@ const Variations = ({ variations , onDeleteVariation }) => {
         <td>{variation.price}</td>
         <td>{variation.cost}</td>
         <td>{variation.stockAmount}</td>
-        <td><button type="button" className="btn btn-danger" onClick={() => onDeleteVariation(variation.variationID)}><i className="fa-solid fa-trash-can"></i></button></td>
+        <td><button type="button" className="btn btn-danger active delete-var" onClick={() => onDeleteVariation(variation.variationID)}><i className="fa-solid fa-trash-can"></i></button></td>
       </tbody>
     );
   });
 
   return (
-    <table>
+    <div className="variations-table table-responsive">
+    <table className="table table-bordered">
       <thead>
         <tr>
           <th>Variation</th>
@@ -25,6 +26,7 @@ const Variations = ({ variations , onDeleteVariation }) => {
       </thead>
       {tableBody}
     </table>
+    </div>
   )
 }
 

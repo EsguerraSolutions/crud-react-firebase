@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import VariationToggling from './VariationToggling';
-import CategoryToggling from './CategoryToggling';
 import Variations from './Variations';
 
 const AddItem = ({ onAddItem }) => {
@@ -13,7 +12,6 @@ const AddItem = ({ onAddItem }) => {
     const [ name , setName ] = useState('');
 
     const [ category , setCategory ] = useState('');
-    const [ isNewCategory , setIsNewCategory ] = useState(true);
 
     const [ variations , setVariations ] = useState([]);
     const [ variationName , setVariationName ] = useState('');
@@ -89,7 +87,6 @@ const AddItem = ({ onAddItem }) => {
         setName('');
         setID(id + 1);
         setCategory('');
-        setIsNewCategory(true);
         setVariations([]);
         setVariationID(0);
         variationReset();
@@ -143,8 +140,17 @@ const AddItem = ({ onAddItem }) => {
                 />
             </div>
 
-            {/* Item Categories Toggleable*/}
-            <CategoryToggling category={category} setCategory={setCategory} isNewCategory={isNewCategory} setIsNewCategory={setIsNewCategory}/>
+            {/* Item Categories*/}
+            <div className="form-group">
+                <label>Category Name</label>
+                <input
+                type="text"
+                placeholder="Category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="form-control"
+                />
+            </div>
 
             {/* Item Variations Toggleable*/}
             <VariationToggling variationName={variationName} setVariationName={setVariationName} hasVariations={hasVariations} setHasVariations={setHasVariations}/>
