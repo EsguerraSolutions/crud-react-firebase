@@ -8,6 +8,8 @@ const AddItem = ({ onAddItem }) => {
 
     /* Define Item Description Variables */
 
+    const [ id , setID ] = useState(0);
+
     const [ name , setName ] = useState('');
 
     const [ category , setCategory ] = useState('');
@@ -16,7 +18,6 @@ const AddItem = ({ onAddItem }) => {
     const [ variations , setVariations ] = useState([]);
     const [ variationName , setVariationName ] = useState('');
     const [ hasVariations , setHasVariations ] = useState(false);
-
 
     const [ variationID , setVariationID ] = useState(0);
     const [ price , setPrice ] = useState('');
@@ -83,9 +84,10 @@ const AddItem = ({ onAddItem }) => {
             });
         }
 
-        onAddItem({ name , category , variations});
+        onAddItem({ id , name , category , variations});
     
         setName('');
+        setID(id + 1);
         setCategory('');
         setIsNewCategory(true);
         setVariations([]);
@@ -119,7 +121,7 @@ const AddItem = ({ onAddItem }) => {
     const onDeleteVariation = (id) => {
 
         setVariations(variations.filter((variation) => 
-            variation.variationID != id
+            variation.variationID !== id
         ));
         
         variationReset();

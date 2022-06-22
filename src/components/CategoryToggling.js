@@ -18,9 +18,9 @@ const CategoryToggling = ({ category , setCategory , isNewCategory , setIsNewCat
                 <label for="category-list">Select Category</label>
                     <select id="category-list" name="categories" className="form-select" value={category} onChange={(e) => e.target.value === "new-category" ? setToNewCategory() : setToExistingCategory(e.target.value) }> 
                         <option value="new-category" selected>New Category</option>
-                        <option value="Foods">Foods</option>
-                        <option value="Drinks">Drinks</option>
-                        <option value="Desserts">Desserts</option>
+                        <option value="a">a</option>
+                        <option value="b">b</option>
+                        <option value="c">c</option>
                     </select>
             </div>
 

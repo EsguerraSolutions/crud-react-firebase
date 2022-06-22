@@ -7,9 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#edit-button {
+  border: 5px solid rgba(235, 223, 9, 10);
 }
 
 .form-container {

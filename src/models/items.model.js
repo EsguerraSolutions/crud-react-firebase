@@ -1,5 +1,6 @@
 const itemsModel = [
     {
+        id : 0,
         name : 'Fries',
         category : 'Food',
         variations : [ {
@@ -25,6 +26,7 @@ const itemsModel = [
         } ]
     },
     {
+        id : 1,
         name : 'Iced Tea',
         category : 'Beverage',
         variations : [ {
@@ -43,6 +45,7 @@ const itemsModel = [
         } ]
     },
     {
+        id : 2,
         name : 'Sundae',
         category : 'Dessert',
         variations : [ {

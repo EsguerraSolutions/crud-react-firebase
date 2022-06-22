@@ -1,11 +1,22 @@
-const Items = ({ items , onDeleteItem }) => {
+const Items = ({ items , onDeleteItem , onToggleMode , onGetVariationData }) => {
+
+      /* Toggling to Edit Mode*/
+
+      const onClickEdit = (id, name, category, variation) => {
+
+        onToggleMode('edit');
+        const forEditVariationData = {id, name, category, ...variation};
+        onGetVariationData(forEditVariationData);
+    
+    }
+
     const tableBody = items.map((item) => {
       return (
-        <tbody key={item.name}>
+        <tbody key={item.id}>
             {
               item.variations.map((variation,index) => {
                 return (
-                    <tr key={variation.variationName}>
+                    <tr key={variation.variationID}>
                       { index === 0 && (
                         <>
                           <td rowspan={item.variations.length}>{item.name}</td>
@@ -16,8 +27,8 @@ const Items = ({ items , onDeleteItem }) => {
                       <td>{variation.price}</td>
                       <td>{variation.cost}</td>
                       <td>{variation.stockAmount}</td>
-                      <td><button type="button" className="btn btn-warning"><i className="fa-solid fa-pen-to-square"></i></button></td>
-                      <td><button type="button" className="btn btn-danger" onClick={ () => onDeleteItem(item.name) } ><i className="fa-solid fa-trash-can"></i></button></td>
+                      <td><button type="button" className="btn btn-warning" onClick={ () => onClickEdit(item.id, item.name, item.category, variation) } ><i className="fa-solid fa-pen-to-square"></i></button></td>
+                      <td><button type="button" className="btn btn-danger" onClick={ () => onDeleteItem(item.id) } ><i className="fa-solid fa-trash-can"></i></button></td>
 
                     </tr>
                 );
