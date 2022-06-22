@@ -8,7 +8,6 @@ import Navbar from './components/Navbar';
 import Items from './components/Items';
 import AddItem from './components/AddItem';
 import EditItem from './components/EditItem';
-import itemsModel from './models/items.model';
 
 function App() {
   const [ items , setItems ] = useState([]);

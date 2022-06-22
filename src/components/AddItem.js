@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
+
+import startFireBase from '../services/firebase';
+import { ref , get , child } from 'firebase/database';
 
 import VariationToggling from './VariationToggling';
 import Variations from './Variations';
@@ -6,6 +9,7 @@ import Variations from './Variations';
 const AddItem = ({ onAddItem }) => {
 
     /* Define Item Description Variables */
+    const db = startFireBase();
 
     const [ id , setID ] = useState(0);
 
@@ -17,10 +21,33 @@ const AddItem = ({ onAddItem }) => {
     const [ variationName , setVariationName ] = useState('');
     const [ hasVariations , setHasVariations ] = useState(false);
 
-    const [ variationID , setVariationID ] = useState(0);
+    const [ variationID , setVariationID ] = useState(1);
     const [ price , setPrice ] = useState('');
     const [ cost , setCost ] = useState('');
     const [ stockAmount , setStockAmount ] = useState('');
+
+    //Get ID from Server
+    useEffect(() => {
+    const getLatestID = async() => {
+        const idFromServer = await fetchID();
+        setID(idFromServer + 1);
+    }
+    getLatestID();
+    },[]);
+
+    // Fetch ID
+    const fetchID = async () => {
+        const dbref = ref(db);
+        const snapshot = await get(child(dbref, 'Item/'));
+        const dataObj = snapshot.val();
+        const dataArr = [];
+        for (let data in dataObj) {
+            dataArr.push(dataObj[data])
+        }
+        const sortedArr = dataArr.sort((a,b) => a.id - b.id);
+        const latestID = sortedArr[sortedArr.length-1].id;
+        return latestID;
+    }
 
     const invalidPriceCheck = () => {
         const check = !(Number(price)) || (Number(price)) < 0 ;

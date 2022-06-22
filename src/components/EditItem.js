@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import CategoryToggling from "./CategoryToggling";
-
 const EditItem = ({ variationData , onToggleMode , onEditItem}) => {
 
     const [ itemID , setItemID ] = useState(variationData.id);
@@ -12,6 +10,30 @@ const EditItem = ({ variationData , onToggleMode , onEditItem}) => {
     const [ variationPrice , setVariationPrice ] = useState(variationData.price);
     const [ variationCost , setVariationCost ] = useState(variationData.cost);
     const [ variationStockAmount , setVariationStockAmount ] = useState(variationData.stockAmount);
+
+    const invalidPriceCheck = () => {
+        const check = !(Number(variationPrice)) || (Number(variationPrice)) < 0 ;
+        if (check) {
+            alert('Please add a valid price')      
+        }
+        return check;
+    }
+
+    const invalidCostCheck = () => {
+        const check = !(Number(variationCost)) || (Number(variationCost)) < 0 ;
+        if (check) {
+            alert('Please add a valid cost')      
+        }
+        return check;
+    }
+
+    const invalidStockAmountCheck = () => {
+        const check = !(Number(variationStockAmount)) || (Number(variationStockAmount)) < 0 ;
+        if (check) {
+            alert('Please add a valid amount of stock')      
+        }
+        return check;
+    }
 
     /* Define On Submit Event */
 
@@ -24,6 +46,10 @@ const EditItem = ({ variationData , onToggleMode , onEditItem}) => {
 
         if (!itemCategory) {
             alert('Please add an category name')
+            return
+        }
+
+        if (invalidPriceCheck() || invalidCostCheck() || invalidStockAmountCheck() ) {
             return
         }
 
@@ -122,7 +148,8 @@ const EditItem = ({ variationData , onToggleMode , onEditItem}) => {
 
             { /* Submit New Item */}
 
-            <input className='btn btn-warning' type='button' value='Edit Item / Variation' onClick={() => onSaveEdit()}/>
+            <input className='btn btn-warning nav-buttons' type='button' value='Edit Item / Variation' onClick={() => onSaveEdit()}/>
+            <input className='btn btn-secondary nav-buttons' type='button' value='Get Back' onClick={() => onToggleMode('get')}/>
 
         </form>
     </div>
