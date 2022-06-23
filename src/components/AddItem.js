@@ -21,7 +21,7 @@ const AddItem = ({ onAddItem }) => {
     const [ variationName , setVariationName ] = useState('');
     const [ hasVariations , setHasVariations ] = useState(false);
 
-    const [ variationID , setVariationID ] = useState(1);
+    const [ variationID , setVariationID ] = useState(0);
     const [ price , setPrice ] = useState('');
     const [ cost , setCost ] = useState('');
     const [ stockAmount , setStockAmount ] = useState('');

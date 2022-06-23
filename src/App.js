@@ -89,6 +89,33 @@ function App() {
 
   /* Deleting Variation */
 
+  const onDeleteVariation = (id, itemDataObj, variationID) => {
+
+    const modifiedItems = items.map((item) => {
+        if (item.id === id) {
+          return {
+            id : id,
+            ...itemDataObj,
+            variations: item.variations.filter((variation)=>
+              variation.variationID !== variationID
+            )
+          }
+        }
+        
+        else {
+          return item;
+        }
+    });
+
+    remove(ref(db, 'Item/' + id + '/variations/' + variationID));
+
+    setItems(modifiedItems);
+
+    alert('Item Edited');
+  }
+
+  /* Deleting Variation */
+
   const onDeleteItem = (id) => {
     remove(ref(db, 'Item/' + id));
     setItems(items.filter((item) => 
@@ -103,7 +130,7 @@ function App() {
       <Header/>
       <Navbar  onToggleMode={onToggleMode} appMode={appMode}/>
       { appMode === 'add' && <AddItem onAddItem={onAddItem}/> }
-      { appMode === 'get' && <Items items={items} onToggleMode={onToggleMode} onGetVariationData={onGetVariationData} onDeleteItem={onDeleteItem}/> }
+      { appMode === 'get' && <Items items={items} onToggleMode={onToggleMode} onGetVariationData={onGetVariationData} onDeleteItem={onDeleteItem} onDeleteVariation={onDeleteVariation}/> }
       { appMode === 'edit' && <EditItem variationData={variationData} onEditItem={onEditItem} onToggleMode={onToggleMode}/> }
     </div>
   );
