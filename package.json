@@ -2,7 +2,7 @@
   "name": "simple-crud-react-and-firebase",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://esguerrasolutions.github.io",
+  "homepage": "https://esguerrasolutions.github.io/crud-react-firebase",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
