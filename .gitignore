@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-/src/models/items.model.js
+items.model.js
 
 
 # production
