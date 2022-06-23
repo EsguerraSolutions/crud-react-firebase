@@ -102,6 +102,7 @@ const AddItem = ({ onAddItem }) => {
             }
 
             variations.push({
+                variationID,
                 variationName : variationName === '' ? 'No Variation' : variationName,
                 price,
                 cost,
