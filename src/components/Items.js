@@ -8,7 +8,8 @@ const Items = ({ items , onDeleteItem , onToggleMode , onGetVariationData , onDe
       onGetVariationData(forEditVariationData);
     }
 
-    const tableBody = items.map((item) => {
+    const tableBody = items.filter((item) => item.variations).map((item) => {
+
       return (
         <tbody key={item.id}>
               {

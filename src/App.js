@@ -90,31 +90,33 @@ function App() {
   /* Deleting Variation */
 
   const onDeleteVariation = (id, itemDataObj, variationID) => {
-
+    const queryItem = items.filter(item => item.id === id)[0];
+    const filteredVariations = queryItem.variations.filter((variation)=>
+    variation.variationID !== variationID
+    );
+    const modifiedItem = {
+      id : id,
+      ...itemDataObj,
+      variations: filteredVariations
+    }
     const modifiedItems = items.map((item) => {
         if (item.id === id) {
-          return {
-            id : id,
-            ...itemDataObj,
-            variations: item.variations.filter((variation)=>
-              variation.variationID !== variationID
-            )
-          }
+          return modifiedItem
         }
         
         else {
           return item;
         }
     });
-
-    remove(ref(db, 'Item/' + id + '/variations/' + variationID));
+    console.log(filteredVariations);
+    update(ref(db, 'Item/' + id),modifiedItem);
 
     setItems(modifiedItems);
 
-    alert('Item Edited');
+    alert('Variation Deleted');
   }
 
-  /* Deleting Variation */
+  /* Deleting Item */
 
   const onDeleteItem = (id) => {
     remove(ref(db, 'Item/' + id));
